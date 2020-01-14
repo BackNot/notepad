@@ -1,0 +1,22 @@
+[class^="col"] {
+    border: 1px solid black;
+    overflow: hidden;
+
+}
+.background-color {
+    background-color: antiquewhite;
+}
+.max-size {
+    height: 100%;
+    width: 100%;
+}
+textarea {
+    resize: none;
+    overflow: scroll;
+}
+.almost-max-size {
+    height: 80%;
+    width: 80%;
+    max-height: 90%;
+    max-width: 90%;
+}
