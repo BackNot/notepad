@@ -1,13 +1,46 @@
 $(document).ready(function() {
     var today = new Date();
-    $("#date").text(today.getDay() +"/" + parseFloat(today.getMonth() + 1)+ "/" + today.getFullYear());
+    $("#date").text(today.getUTCDate() +"/" + parseFloat(today.getMonth() + 1)+ "/" + today.getFullYear());
+
+    $("#theme").click(function() {
+        $("textarea").toggleClass("stripes");
+    });
+
+    $("#border").click(function() {
+        $("div[class^='col']").toggleClass("solid-border");
+    });
+
+    $("#color").change(function() {
+        let color = $(this).val();
+        $(".container-fluid").css("background-color", color);
+    });
 
     $("#save-notebook").click(function() {
         if (isValidPageName())
-            saveAll();
+        {
+            let pagename = $("#name").val();
+            if (localStorage.getItem(pagename) != null)
+                $("#modal-overwrite").modal("show");
+            else
+                saveAll();
+        }
         else
             alert("Please enter name of the page.");
+    });
 
+    $("#btn-overwrite").click(function() {
+        saveAll($("#name").val());
+    });
+
+    $("#btn-delete").click(function() {
+        $("#modal-choose").modal("hide");
+        $("#modal-deletion").modal("show");
+    });
+
+    $("#btn-delete-confirm").click(function() {
+        localStorage.clear();
+        $("#modal-deletion").modal("hide");
+        alert("Everything was deleted.")
     });
 
     function isValidPageName()
@@ -18,16 +51,22 @@ $(document).ready(function() {
         return true;
     }
 
-    function saveAll()
+    function saveAll(page = null)
     {   
-        console.log('here');
         let today = new Date();
-        let pagename = $("#name").val();
+        let prefix = "FMI_";
+        let pagename = null;
+        if (page == null)
+            pagename = prefix + $("#name").val() +"_" + today;
+        else
+            pagename = page;
+
         let words = $("#word-area").val();
         let wordsT = $("#word-translation-area").val();
         let verbs = $("#verb-area").val();
         let verbsT = $("#verb-translation-area").val();
-        console.log(pagename);
+        let rules = $("#rule-area").val();
+        let examples = $("#example-area").val();
 
         
         var pageObj = {};
@@ -35,15 +74,21 @@ $(document).ready(function() {
         pageObj.wordsT = wordsT;
         pageObj.verbs = verbs;
         pageObj.verbsT = verbsT;
-        localStorage.setItem("FMI3.14_"+pagename+"_ "+today, JSON.stringify(pageObj));
+        pageObj.rules = rules;
+        pageObj.examples = examples;
+        pageObj.date = today.getUTCDate() + "/" + (parseFloat(today.getMonth()+1)) + "/" +today.getFullYear();
 
-        alert("all saved");
-        //localStorage.setItem("words", words);
-        //localStorage.setItem("wordsT", wordsT);
-        //localStorage.setItem("verbs", verbs);
-        //localStorage.setItem("verbsT", verbsT);
+        localStorage.setItem(pagename, JSON.stringify(pageObj));
+
+        alert("Page was saved correctly.");
+        window.location.reload();
     }
-    
+
+    $("#new").click(function() {
+        $("input[type='text']").val("");
+        $("textarea").val("");
+    });
+
     function getAll(key)
     {
         var result = localStorage.getItem(key);
@@ -52,6 +97,10 @@ $(document).ready(function() {
         console.log(result);
         if (result != null)
         {
+            $("#date").text(result.date);
+
+            $("#rule-area").val(result.rules);
+            $("#example-area").val(result.examples);
             $("#word-area").val(result.words);
             $("#word-translation-area").val(result.wordsT);
             $("#verb-area").val(result.verbs);
@@ -61,21 +110,21 @@ $(document).ready(function() {
 
     $("#open").click(function(){
         $("#modal-choose").modal("show");
-        $(".modal-body").text("");
+        $("#modal-choose-body").text("");
         for (var i = 0; i < localStorage.length; i++) {
             let currentKey = localStorage.key(i);
-            if (currentKey.slice(0,7) == "FMI3.14")
+            if (currentKey.startsWith("FMI_"))
             {
-                $('.modal-body').append("<span class='keys'>"+currentKey.toString()+"</span><hr></hr>");
+                $('#modal-choose-body').append("<span class='keys'>"+currentKey.toString()+"</span><hr></hr>");
                 console.log(currentKey);
             }
         }
     });
+
     $(document).on("click", ".keys", function() {
         let key = $(this).text();
         getAll(key);
         $("#modal-choose").modal("hide");
-
     });
 
     function print(args)
