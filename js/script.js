@@ -37,6 +37,7 @@ $(document).ready(function() {
         pageObj.verbsT = verbsT;
         localStorage.setItem("FMI3.14_"+pagename+"_ "+today, JSON.stringify(pageObj));
 
+        alert("all saved");
         //localStorage.setItem("words", words);
         //localStorage.setItem("wordsT", wordsT);
         //localStorage.setItem("verbs", verbs);
