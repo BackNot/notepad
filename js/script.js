@@ -3,7 +3,7 @@ $(document).ready(function() {
     $("#date").text(today.getDay() +"/" + parseFloat(today.getMonth() + 1)+ "/" + today.getFullYear());
 
     $("#save-notebook").click(function() {
-        if (isValidPageName)
+        if (isValidPageName())
             saveAll();
         else
             alert("Please enter name of the page.");
