@@ -9,6 +9,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
 </head>
 <body>
@@ -17,11 +18,7 @@
         <div class="col-md-12 text-left solid-border">
             <input type="button" id="open" class="btn btn-sm btn-success" value="open"/>
             <input type="button" id="new" class="btn btn-sm btn-success" value="new"/>
-            This:
-            <input type="button" id="theme" class="btn btn-sm btn-success" value="CHANGE THEME #2"/>
-            <input type="button" id="border" class="btn btn-sm btn-success" value="TOGGLE BORDER"/>
-            Custom color as background: 
-            <input type="color" id="color"/>
+            <input type="button" id="customize" class="btn btn-sm btn-success" value="change theme"/>
 
         </div>
     </div>
@@ -71,13 +68,45 @@
     </div>
     <div class="row">
         <div class="col-md-12 text-right solid-border">
-            <input type="button" id="save-notebook" class="btn btn-sm btn-success" value="save" />
+            <input type="button" class="btn btn-success save-notebook" data-refresh="false" value="save" />
+            <input type="button" class="btn btn-success save-notebook" data-refresh="true" value="save and close" />
+          </div>
         </div>
-    </div>
 </div>
-
+<span id="action-btns">
+  <input type="button" class="btn btn-info open-notebook" value="open" />
+  <input type="button" class="btn btn-warning export-notebook" value="export to pdf" />
+  <input type="button" class="btn btn-danger delete-notebook" data-refresh="true" value="delete" />
+</span>
 </body>
+
 <!-- MODALS -->
+
+<div class="modal" id="modal-theme" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-info">
+        <h5 class="modal-title">Customize your experience</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="button" id="theme" class="btn btn-sm btn-success" value="CHANGE THEME #2"/>
+        <br>
+        <input type="button" id="border" class="btn btn-sm btn-success mt-3" value="TOGGLE BORDER"/>
+        <br>
+        <div class="text-muted mt-2">Custom notebook color as background: 
+        <input type="color" id="page-color"/></div>
+        <div class="text-muted mt-2">Custom lines color as background:
+        <input type="color" id="boxes-color"/></div> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="modal" id="modal-overwrite" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
