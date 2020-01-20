@@ -16,7 +16,7 @@
 <div class="container-fluid d-flex flex-column max-size background-color">
     <div class="row">
         <div class="col-md-12 text-left solid-border">
-            <input type="button" id="open" class="btn btn-sm btn-success" value="open"/>
+            <input type="button" id="open" class="btn btn-sm btn-success" value="file"/>
             <input type="button" id="new" class="btn btn-sm btn-success" value="new"/>
             <input type="button" id="customize" class="btn btn-sm btn-success" value="change theme"/>
 
@@ -73,11 +73,6 @@
           </div>
         </div>
 </div>
-<span id="action-btns">
-  <input type="button" class="btn btn-info open-notebook" value="open" />
-  <input type="button" class="btn btn-warning export-notebook" value="export to pdf" />
-  <input type="button" class="btn btn-danger delete-notebook" data-refresh="true" value="delete" />
-</span>
 </body>
 
 <!-- MODALS -->
@@ -100,6 +95,8 @@
         <input type="color" id="page-color"/></div>
         <div class="text-muted mt-2">Custom lines color as background:
         <input type="color" id="boxes-color"/></div> 
+        <div class="text-muted mt-2">Custom text color:
+          <input type="color" id="text-color"/></div> 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -150,6 +147,26 @@
   </div>
 
 
+  <div class="modal" id="modal-deletion-one" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-danger">
+          <h5 class="modal-title">Warning</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            Are you sure that you want to delete this record?
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="btn-delete-one-confirm" class="btn btn-danger">Yes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <div class="modal" id="modal-choose" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -162,6 +179,11 @@
         <div id="modal-choose-body" class="modal-body">
         </div>
         <div class="modal-footer">
+          <span id="action-btns" class="mr-auto">
+            <input type="button" class="btn btn-info open-notebook" value="Open" />
+            <input type="button" class="btn btn-warning export-notebook" value="Export to pdf" />
+            <input type="button" class="btn btn-danger delete-notebook" data-refresh="true" value="Delete" />
+          </span>
           <button type="button" id="btn-delete" class="btn btn-danger">Delete all</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>

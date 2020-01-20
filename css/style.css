@@ -33,3 +33,7 @@ textarea {
 .keys:hover {
     background: lightgrey;
 }
+
+.lightgrey-background {
+    background: lightgrey;
+}

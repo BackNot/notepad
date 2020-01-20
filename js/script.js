@@ -1,5 +1,4 @@
 $(document).ready(function() {
-$("#action-btns").hide();
     // Parse today date in the page
     var today = new Date();
     $("#date").text(today.getUTCDate() +"/" + parseFloat(today.getMonth() + 1)+ "/" + today.getFullYear());
@@ -39,11 +38,23 @@ $("#action-btns").hide();
 
     $(".delete-notebook").click(function() {
         let key = $(this).parent().attr("data-record");
+        if (key == null || key == undefined || key == "")
+            alert("Select a record first");
+        else {
+            $("#modal-choose").modal("hide");
+            $("#modal-deletion-one").modal("show");
+            $("#btn-delete-one-confirm").attr("data-record", key);
+        }
+    });
+
+    $("#btn-delete-one-confirm").click(function() {
+        let key = $(this).attr("data-record");
+        if (key == null || key == undefined || key == "")
+            return;
         localStorage.removeItem(key);
         alert("Page deleted.");
         window.location.reload();
     });
-
 
     $("#border").click(function() {
         $("div[class^='col']").toggleClass("solid-border");
@@ -125,10 +136,15 @@ $("#action-btns").hide();
 
         let prefix = "FMI_";
         let pagename = null;
-        if (page == null)
+        let pageNameToBeShown = null
+        if (page == null) {
             pagename = prefix + $("#name").val() +"_" + timestampt;
-        else
+            pageNameToBeShown = $("#name").val();
+        }
+        else {
             pagename = page;
+            pageNameToBeShown = page;
+        }
 
         let words = $("#word-area").val();
         let wordsT = $("#word-translation-area").val();
@@ -139,6 +155,7 @@ $("#action-btns").hide();
 
         
         var pageObj = {};
+        pageObj.realName = pageNameToBeShown;
         pageObj.words = words;
         pageObj.wordsT = wordsT;
         pageObj.verbs = verbs;
@@ -157,17 +174,17 @@ $("#action-btns").hide();
     }
 
     $("#new").click(function() {
-        $("input[type='text']").val("");
+        $("input[type='text']").val("").attr("disabled", false);
         $("textarea").val("");
     });
 
     function getAll(key)
     {
         var result = localStorage.getItem(key);
-        $("#name").val(key).attr("disabled", "true");
         result = JSON.parse(result);
         if (result != null)
         {
+            $("#name").val(key).attr("disabled", "true");
             $("#date").text(result.date);
             $("#rule-area").val(result.rules);
             $("#example-area").val(result.examples);
@@ -192,47 +209,55 @@ $("#action-btns").hide();
     });
 
     $(document).on("click", "html", function() {
-        $("#action-btns").hide();
         $("#action-btns").attr("data-record", "");
+        $(".keys").removeClass("lightgrey-background");
     });
 
     $(document).on("click", ".keys", function(e) {
         let key = $(this).text();
         e.stopPropagation();
-        $("#action-btns").css({position: "absolute", "z-index": "10000", top: event.clientY, left: event.clientX}).show();
         $("#action-btns").attr("data-record", key);
+        $(".keys").removeClass("lightgrey-background");
+        $(this).addClass("lightgrey-background");
     });
 
     $(".open-notebook").click(function() {
         let key = $(this).parent().attr("data-record");
+        if (key == null || key == undefined || key == "")
+            alert("Select a record first");
+        else {
             getAll(key);
-        $("#modal-choose").modal("hide");
+            $("#modal-choose").modal("hide");
+        }
     });
 
     $(".export-notebook").click(function() {
         let key = $(this).parent().attr("data-record");
-        let newDocument = new jsPDF();
-        
-        var result = localStorage.getItem(key);
-        result = JSON.parse(result);
-        console.log(result);
-        newDocument.text("Name: " + key, 10, 10);
-        newDocument.text("Date:" + result.date, 10, 20);
-        newDocument.text("Rules:", 10, 30);
-        newDocument.text(result.rules, 10, 40);
-        newDocument.text("Examples:", 10, 60);
-        newDocument.text(result.examples, 10, 70);
-        newDocument.text("Words:", 10, 90);
-        newDocument.text(result.words, 10, 100);
-        newDocument.text("Translations:", 10, 120);
-        newDocument.text(result.wordsT, 10, 130);
-        newDocument.text("Verbs:", 10, 150);
-        newDocument.text(result.verbs, 10, 160);
-        newDocument.text("Translations:", 10, 180);
-        newDocument.text(result.verbsT, 10, 190);
+        if (key == null || key == undefined || key == "")
+            alert("Select a record first");
+        else {
+            let newDocument = new jsPDF();
+            
+            var result = localStorage.getItem(key);
+            result = JSON.parse(result);
+            console.log(result);
+            newDocument.text("Name: " + result.realName, 10, 10);
+            newDocument.text("Date:" + result.date, 10, 20);
+            newDocument.text("Rules:", 10, 30);
+            newDocument.text(result.rules, 10, 40);
+            newDocument.text("Examples:", 10, 60);
+            newDocument.text(result.examples, 10, 70);
+            newDocument.text("Words:", 10, 90);
+            newDocument.text(result.words, 10, 100);
+            newDocument.text("Translations:", 10, 120);
+            newDocument.text(result.wordsT, 10, 130);
+            newDocument.text("Verbs:", 10, 150);
+            newDocument.text(result.verbs, 10, 160);
+            newDocument.text("Translations:", 10, 180);
+            newDocument.text(result.verbsT, 10, 190);
 
-        newDocument.save("notavirus.pdf");
-
+            newDocument.save("notavirus.pdf");
+        }
     });
 
     function print(args)
