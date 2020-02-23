@@ -1,7 +1,6 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- STYLES -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="css/style.css" rel="stylesheet">
@@ -19,7 +18,6 @@
             <input type="button" id="open" class="btn btn-sm btn-success" value="file"/>
             <input type="button" id="new" class="btn btn-sm btn-success" value="new"/>
             <input type="button" id="customize" class="btn btn-sm btn-success" value="change theme"/>
-
         </div>
     </div>
     <div class="row">
@@ -43,19 +41,16 @@
         <div class="col-md-12 solid-border">
             <div>Examples</div>
             <textarea id="example-area" class="almost-max-size background-color"></textarea>
-
         </div>
     </div>
     <div class="row flex-grow-1">
         <div class="col-md-3 solid-border">
             <div>Word</div>        
             <textarea id="word-area" class="almost-max-size background-color"></textarea>
-
         </div>
         <div class="col-md-3 solid-border">
             <div>Translatation</div>
             <textarea id="word-translation-area" class="almost-max-size background-color"></textarea>
-
         </div>
         <div class="col-md-3 solid-border">
             <div>Verb</div>
@@ -70,13 +65,12 @@
         <div class="col-md-12 text-right solid-border">
             <input type="button" class="btn btn-success save-notebook" data-refresh="false" value="save" />
             <input type="button" class="btn btn-success save-notebook" data-refresh="true" value="save and close" />
-          </div>
         </div>
+    </div>
 </div>
 </body>
 
 <!-- MODALS -->
-
 <div class="modal" id="modal-theme" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -96,7 +90,8 @@
         <div class="text-muted mt-2">Custom lines color as background:
         <input type="color" id="boxes-color"/></div> 
         <div class="text-muted mt-2">Custom text color:
-          <input type="color" id="text-color"/></div> 
+          <input type="color" id="text-color"/>
+        </div> 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -125,7 +120,6 @@
     </div>
   </div>
 
-
 <div class="modal" id="modal-deletion" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -145,7 +139,6 @@
       </div>
     </div>
   </div>
-
 
   <div class="modal" id="modal-deletion-one" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">

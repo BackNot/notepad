@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     // Parse today date in the page
     var today = new Date();
     $("#date").text(today.getUTCDate() +"/" + parseFloat(today.getMonth() + 1)+ "/" + today.getFullYear());
@@ -14,7 +15,6 @@ $(document).ready(function() {
             $("div[class^='col']").removeClass("solid-border");
         else
             $("div[class^='col']").addClass("solid-border");
-
     }
 
     if (sessionStorage.getItem("stripes") != null)
@@ -33,6 +33,7 @@ $(document).ready(function() {
             sessionStorage.removeItem("stripes");
         else
             sessionStorage.setItem("stripes", "true");
+
         sessionStorage.removeItem("boxColor");
     });
 
@@ -152,7 +153,6 @@ $(document).ready(function() {
         let verbsT = $("#verb-translation-area").val();
         let rules = $("#rule-area").val();
         let examples = $("#example-area").val();
-
         
         var pageObj = {};
         pageObj.realName = pageNameToBeShown;
@@ -201,10 +201,7 @@ $(document).ready(function() {
         for (var i = 0; i < localStorage.length; i++) {
             let currentKey = localStorage.key(i);
             if (currentKey.startsWith("FMI_"))
-            {
                 $('#modal-choose-body').append("<span class='keys'>"+currentKey.toString()+"</span><hr></hr>");
-                console.log(currentKey);
-            }
         }
     });
 
@@ -259,12 +256,4 @@ $(document).ready(function() {
             newDocument.save("notavirus.pdf");
         }
     });
-
-    function print(args)
-    {
-        for(let i = 0;i < args.length; i++)
-        {
-            console.log(args[i]);
-        }
-    }
 });
